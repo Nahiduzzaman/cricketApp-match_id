@@ -6,6 +6,7 @@
 		    constructor.$inject = ['$stateParams','StatisticService','$scope','$window','$state'];
 		    function constructor($stateParams,StatisticService,$scope,$window,$state) {
 		    	var vm = this;
+		    	vm.over_to_be_played = 1;
 		    	var gameData = [];
 		    	var allmatchData = [];
 		    	var lastMatchData = [];
@@ -44,12 +45,20 @@
 		            	var lastMatchData = vm.matchData[vm.matchData.length-1].gameData;
 		            	vm.match_id = lastMatchData[lastMatchData.length-1].match_id+1;
 		            }
-		      	}	      	
+		      	}
 
-	            console.log('matchData',vm.matchData);
+		      	if(JSON.parse(localStorage.getItem("gameData"))){
+	            	var current_gameData = JSON.parse(localStorage.getItem("gameData"));
+	            	vm.current_match_id = current_gameData[current_gameData.length-1].match_id; 
+	            	vm.current_ball = current_gameData[current_gameData.length-1].ball; 
+	            	vm.current_over = current_gameData[current_gameData.length-1].over;
+	            	console.log('m-b-o',vm.current_match_id,vm.current_ball,vm.current_over) 
+	        	}	      	
+
 	            vm.match_id_by_route = $stateParams.match; 
-	            console.log('match_id_by_route',$stateParams.match);
 	            vm.old_match = false;
+	            vm.current_atch = false;
+
 	            vm.get_old_and_currentMatch_history = function(){
 	            	if($stateParams.match <= vm.matchData.length){
 	            		vm.old_match = true; 
@@ -59,10 +68,11 @@
 		            	vm.gameData = vm.matchData[$stateParams.match-1].gameData;
 		            }else{
 		          		console.log('current match');
+		          		vm.current_atch = true;
 		    			vm.teamData = JSON.parse(localStorage.getItem("teamData"));
 			        	vm.gameData = JSON.parse(localStorage.getItem("gameData")); //it shows when controller reinitialize after route changed
 			        }
-	            }
+	            }	            
 
 		        vm.sendIndex = function(item,idx){
 		            vm.getStats = item;

@@ -8,30 +8,49 @@
     </div>
 
     <div>
-        <a ng-hide="vm.gameData[vm.gameData.length-1].over == 1" 
+        <a ng-hide="vm.gameData[vm.gameData.length-1].over == vm.over_to_be_played" 
            href="#/play/{{vm.match_id}}/{{vm.gameData[vm.gameData.length-1].over}}/{{vm.gameData[vm.gameData.length-1].ball}}"
            class="btn btn-primary" ng-click="vm.bowl()">
            Bowl
         </a>
-        <a ng-if="vm.gameData[vm.gameData.length-1].over == 1 && !vm.old_match" class="btn btn-danger" href="#/start" ng-click="vm.newGame()" >Finish</a>
+        <a ng-if="vm.gameData[vm.gameData.length-1].over == vm.over_to_be_played && !vm.old_match" class="btn btn-danger" href="#/start" ng-click="vm.newGame()" >Finish</a>
         <a class="btn btn-warning" href="#/play/{{vm.match_id_by_route}}/{{vm.gameData[vm.gameData.length-1].over}}/{{vm.gameData[vm.gameData.length-1].ball}}">Full Scorecard</a>
-    </div>        
-   <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Overs</th>
-                <th>Run per Ball</th>
-                <th>Scenario</th>
-                <th>Live! Ball by ball Commentary</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="item in vm.gameData | limitTo: vm.getStats.indexOfScore+1">
-                <td><a href="#/play/{{item.match_id}}/{{item.over}}/{{item.ball}}" ng-click="vm.sendIndex(item)">{{item.over}}.{{item.ball}}</a></td>
-                <td>{{item.run_per_ball}}</td>
-                <td>{{item.score}}</td>
-                <td>{{item.comments}}</td>
-            </tr>     
-        </tbody>
-  </table>
+        <a ng-if="vm.old_match" class="btn btn-primary" href="#/play/{{vm.current_match_id}}/{{vm.current_over}}/{{vm.current_ball}}">Go Live!</a>
+
+        <div class="over">
+            <label>Last 6 Deliveries:</label>
+            <ul style="display: inline-block;padding-left: 0px;margin-top: 20px">
+                <li ng-repeat="item in vm.gameData | limitTo:-6 ">
+                    <span>{{item.score}}</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table">
+              <thead>
+                  <tr>
+                      <th>Overs</th>
+                      <th>Run per Ball</th>
+                      <th>Scenario</th>
+                      <th>Live! Ball by ball Commentary</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr ng-repeat="item in vm.gameData | limitTo: vm.getStats.indexOfScore+1" ng-class="{danger:item.score=='W'}">
+                      <td><a href="#/play/{{item.match_id}}/{{item.over}}/{{item.ball}}" ng-click="vm.sendIndex(item)">{{item.over}}.{{item.ball}}</a></td>
+                      <td>{{item.run_per_ball}}</td>
+                      <td>{{item.score}}</td>
+                      <td>{{item.comments}}</td>
+                  </tr>     
+              </tbody>
+            </table>
+        </div>
+  </div>
+
+  <div class="list-group">
+    <a href="#" class="list-group-item">First item</a>
+    <a href="#" class="list-group-item">Second item</a>
+    <a href="#" class="list-group-item">Third item</a>
+  </div>
 </div>
