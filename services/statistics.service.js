@@ -8,13 +8,13 @@
 
 		    	if(JSON.parse(localStorage.getItem("matchData")) == null){
 		    		var matches = [];
-				    var match_id = 0;
+				    var match_id = 1;
 		    	}else{
 		    		var matches = JSON.parse(localStorage.getItem("matchData"));
 		    		console.log('matches',matches);
 		    		var lastGameData = matches[matches.length-1].gameData;
 		    		console.log('lastGameData',lastGameData);
-		    		var match_id = lastGameData[lastGameData.length-1].match_id;
+		    		var match_id = lastGameData[lastGameData.length-1].match_id+1;
 		    	}
 
 		        var scoreArray = [0,1,2,3,4,6,'W','WD','NB'];
@@ -87,11 +87,12 @@
 
 		        return {
 		        	setMatch_id: function(){
-				    	match_id++;
+				    	
 		            	console.log('match_id',match_id);
 		            },
 
 		            newgame: function(){
+		            	match_id++;
 		            	console.log(matches);
 		                var teamData_for_match = JSON.parse(localStorage.getItem("teamData"));
 		                var gameData_for_match = JSON.parse(localStorage.getItem("gameData"));
@@ -153,12 +154,21 @@
 		                return statistics;
 		            },
 
-		            get: function(match,ball,over,data) {
+		            get: function(match,ball,over,matchdata,gamedata) {
 		                console.log('match',match);
-		                //console.log('ball',ball);
-		                //console.log('over',over);
-		                console.log('data',data);
-		                if(data){
+		                console.log('ball',ball);
+		                console.log('over',over);
+		                console.log('matchdata',matchdata);
+		                console.log('gamedata',gamedata);
+		                if(gamedata){		                	
+			                if(gamedata[0].match_id == match){
+			                	var data = gamedata;
+			                }
+			                else{
+			                	var data = []; 
+			                	var match_history = matchdata[match-1];
+			                	data = match_history.gameData;
+			                }		              
 		                	console.log('data',data);
 		                    var scoresbyball = $filter('filter')(data, {'match_id':match,'ball':ball,'over':over});
 		                    console.log('scoresbyballArray',scoresbyball);
@@ -172,6 +182,6 @@
 		                }
 		            }
 		        } 
-		    }
+		    }//End of constructor
 
 })(window.angular);

@@ -1,47 +1,35 @@
 ﻿<div class="container"> 
     <form>
-        <label>Country1:</label>
+        <label>Country 1:</label>
         <div class="sidebyside">
-          <input placeholder="country1" ng-model="vm.game.country1" type="text" class="form-control" id="country1">
+            <select class="form-control" ng-model="vm.game.country1">
+                <option ng-repeat="team in vm.teamList" value="{{team}}">{{team}}</option>
+            </select>
         </div>
-
-       <!--  <div class="sidebyside">
-          <div class="radio">
-            <label class="radio-inline control-label">
-              <input type="radio" ng-model="vm.game.to_bowl" name="to_bowl" id="a" ng-value="vm.game.country1" required>
-            </label>
-          </div>
-        </div> -->
 
         <br>
 
-        <label>Country2:</label>
-        
+        <label>Country 2:</label>        
         <div class="sidebyside">
-          <input placeholder="country2" ng-model="vm.game.country2" type="text" class="form-control" id="country2">
+            <select class="form-control" ng-model="vm.game.country2">
+                <option ng-repeat="team in vm.teamList" value="{{team}}">{{team}}</option>
+            </select>
         </div>
 
-        <!-- <div class="sidebyside">
-          <div class="radio">
-            <label class="radio-inline control-label">
-              <input type="radio" ng-model="vm.game.to_bowl" name="to_bowl" id="b" ng-value="vm.game.country2" required>
-            </label>
-          </div>
-        </div> -->
         <div ng-hide="vm.showCoin">
-           <center><img style="width: 100%" src="styles/images/animation.gif"></center>
+            <center><img style="width: 100%" src="styles/images/animation.gif"></center>
         </div>    
 
         <p ng-if="vm.showTossResult">
-          Very cloudy condition!, <b>{{vm.country_to_bowl}}</b> choose to bowl first
+            Very cloudy condition!, <b>{{vm.country_to_bowl}}</b> choose to bowl first
         </p>
 
 
 
         <div>
-           <br>
-          <a ng-hide="vm.hideTossButton || vm.showTossResult" class="btn btn-info" ng-click="vm.coinToss(vm.game)">Toss</a>
-          <a ng-show="vm.showTossResult" href="#/play/1/0/0" class="btn btn-info" ng-click="vm.setGame(vm.game)">Play</a>
+            <br>
+            <a ng-hide="vm.hideTossButton || vm.showTossResult" class="btn btn-info" ng-click="vm.coinToss(vm.game)">Toss</a>
+            <a ng-show="vm.showTossResult" href="#/play/{{vm.match_id}}/0/0" class="btn btn-info" ng-click="vm.setGame(vm.game)">Play</a>
         </div>
     </form>
 

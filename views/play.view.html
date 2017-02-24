@@ -13,9 +13,8 @@
            class="btn btn-primary" ng-click="vm.bowl()">
            Bowl
         </a>
-        <a ng-if="vm.gameData[vm.gameData.length-1].over == 1" class="btn btn-danger" href="#/start" ng-click="vm.resetData()" >Finish</a>
-        <a ng-if="vm.gameData[vm.gameData.length-1].over == 1" class="btn btn-danger" href="#/start" ng-click="vm.newGame()" >New Game</a>
-        <a class="btn btn-warning" href="#/play/{{vm.gameData[vm.gameData.length-1].over}}/{{vm.gameData[vm.gameData.length-1].ball}}">Full Scorecard</a>
+        <a ng-if="vm.gameData[vm.gameData.length-1].over == 1 && !vm.old_match" class="btn btn-danger" href="#/start" ng-click="vm.newGame()" >Finish</a>
+        <a class="btn btn-warning" href="#/play/{{vm.match_id_by_route}}/{{vm.gameData[vm.gameData.length-1].over}}/{{vm.gameData[vm.gameData.length-1].ball}}">Full Scorecard</a>
     </div>        
    <table class="table table-striped">
         <thead>
@@ -28,7 +27,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="item in vm.gameData | limitTo: vm.getStats.indexOfScore+1">
-                <td><a href="#/play/{{item.over}}/{{item.ball}}" ng-click="vm.sendIndex(item)">{{item.over}}.{{item.ball}}</a></td>
+                <td><a href="#/play/{{item.match_id}}/{{item.over}}/{{item.ball}}" ng-click="vm.sendIndex(item)">{{item.over}}.{{item.ball}}</a></td>
                 <td>{{item.run_per_ball}}</td>
                 <td>{{item.score}}</td>
                 <td>{{item.comments}}</td>
